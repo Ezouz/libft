@@ -6,49 +6,33 @@
 /*   By: ehouzard <ehouzard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/11 18:36:57 by ehouzard          #+#    #+#             */
-/*   Updated: 2018/01/15 17:07:12 by ehouzard         ###   ########.fr       */
+/*   Updated: 2018/05/15 16:53:30 by ehouzard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static char		*splitintab(char const *s, char c, int *idx)
-{
-	char			*str;
-	unsigned int	start;
-	size_t			len;
-
-	str = NULL;
-	start = 0;
-	len = 0;
-	while (s[start] == c)
-		start++;
-	len = ft_count_char(s + start, c);
-	(*idx) = (*idx) + start + len;
-	if ((str = ft_strsub(s, start, len)) == NULL)
-		return (NULL);
-	return (str);
-}
-
 char			**ft_strsplit(char const *s, char c)
 {
 	char	**tab;
-	size_t	nb_words;
-	size_t	i;
-	int		idx;
+	int		nb_words;
+	int		i;
 
 	i = 0;
-	idx = 0;
 	if (!s)
 		return (NULL);
-	nb_words = ft_count_words(s, c);
-	if (!(tab = (char**)malloc((sizeof(char*) * nb_words + 1))))
+	nb_words = ft_count_words((char *)s, c);
+	if (!(tab = (char **)malloc((sizeof(char *) * (nb_words + 1)))))
 		return (NULL);
-	while (i < nb_words)
+	while (nb_words--)
 	{
-		tab[i] = splitintab(s + idx, c, &idx);
+		while (*s == c && *s != '\0')
+			s++;
+		if (!(tab[i] = ft_strsub(s, 0, ft_count_char((char *)s, c))))
+			return (NULL);
+		s = s + ft_count_char((char *)s, c);
 		i++;
 	}
-	tab[nb_words] = NULL;
+	tab[i] = NULL;
 	return (tab);
 }
