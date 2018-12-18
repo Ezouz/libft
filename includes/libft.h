@@ -6,7 +6,7 @@
 /*   By: ehouzard <ehouzard@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/09 13:30:24 by ehouzard          #+#    #+#             */
-/*   Updated: 2018/03/29 21:33:24 by ehouzard         ###   ########.fr       */
+/*   Updated: 2018/12/18 21:10:43 by ehouzard         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,23 @@
 # include <sys/stat.h>
 # include <limits.h>
 # include <fcntl.h>
+# include <math.h>
 
 # define BUFF_SIZE 4500
+
+typedef struct		s_tsl
+{
+	double			t;
+	double			s;
+	double			l;
+}					t_tsl;
+
+typedef struct		s_rvb
+{
+	double			r;
+	double			v;
+	double			b;
+}					t_rvb;
 
 typedef struct		s_list
 {
@@ -104,10 +119,11 @@ void				ft_lstiter(t_list *lst, void (*f)(t_list *elem));
 t_list				*ft_lstmap(t_list *lst, t_list *(*f)(t_list *elem));
 int					ft_is_space(char str);
 void				ft_print_words_tables(char **tab);
-int					ft_count_words(const char *s, char c);
-size_t				ft_count_char(const char *s, char c);
+int					ft_count_words(char *s, char c);
+int					ft_count_char(const char *s, char c);
 void				ft_print_numbers_tables(int **tab);
 void				ft_free_tab(char **tab, int size_tab);
 t_idx				get_idx(void);
+t_rvb				ft_tsl_to_rvb(t_tsl tsl);
 
 #endif
